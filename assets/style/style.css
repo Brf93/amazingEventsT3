@@ -1,0 +1,75 @@
+#activo{
+    background-color: #d9036776 !important;
+}
+#activo:hover{
+    color: #000000 !important;
+}
+main{
+    min-height: 75vh!important;
+}
+.navHover:hover{
+    background-color: #d9036776 !important;
+}
+.carousel-control-prev {
+    background-color: white !important;
+}
+.carousel-control-next{
+    background-color: white !important;
+}
+.carousel-control-prev-icon{
+    color: #D90368 !important;
+}
+.carousel-control-next-icon{
+    color: #D90368!important;
+}
+button{
+    background-color: #D90368 !important;
+}
+footer p{
+    color: white;
+}
+.footerFullSize{
+    min-height: 10vh;
+}
+.carousel-item{
+    font-size: 28px;
+    padding: 10px;
+}
+
+#exampleFormControlTextarea1{
+    resize: none;
+}
+#tablaEventos table
+{
+    border-style: solid;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+#tablaEventos{
+    padding-bottom: 5rem;
+}
+#tablaEventos thead{
+    background-color: #d90367bd;
+}
+tbody tr{
+    border-style: solid;
+    border-width: 1px;
+    width: 100%;
+    display: flex;
+}
+tbody td{
+    border-style: solid;
+    border-width: 1px;
+    width: 100%;
+}
+@media screen and (max-width : 768px) {
+    .footerMobile{
+        display: flex !important;
+        justify-content: center !important;
+    }
+    #buscadorDesk{
+        flex-direction: column!important;
+        flex-wrap: wrap;
+    }
+}
