@@ -1,7 +1,6 @@
 
 const tarjetas = document.getElementById("tarjetas")
 const categoriasDiv = document.getElementById("categoriasData")
-const contenedorDetails = document.getElementById("contenedorDetails")
 const inputBuscar = document.getElementById('buscar')
 const categorias = data.events
 const eventosHome = data.events
@@ -15,7 +14,7 @@ const formulario = document.getElementById('form')
 imprimirTarjetas( eventosHome ,tarjetas )
 inputListenerHome()
 
-    function crearEventos(eventos) {
+function crearEventos(eventos) {
         let div = document.createElement('div')
         div.className = 'col'
         div.innerHTML = `<div class="card shadow-sm h-100" >
@@ -28,7 +27,7 @@ inputListenerHome()
                         <div class="d-flex justify-content-between align-items-center">
                             <small class="text-muted">Price: $${eventos.price}</small>
                             <div class="btn-group">
-                            <a href="../pages/details.html?id=${eventos._id}"><button type="button" class="btn btn-sm btn-outline-secondary text-white">View more</button></a>
+                            <a href="../assets/pages/details.html?id=${eventos._id}"><button type="button" class="btn btn-sm btn-outline-secondary text-white">View more</button></a>
                             </div>
                         </div>
                     </div>
@@ -36,7 +35,7 @@ inputListenerHome()
             return div
     }
     
-    function imprimirTarjetas(eventos,contenedor){
+function imprimirTarjetas(eventos,contenedor){
     
         contenedor.innerHTML = ''
         let fragment = document.createDocumentFragment()
@@ -56,7 +55,7 @@ function crearCheckBoxs(values, contenedor){
 }
 
 function filtrarCategorias(categoria,categoriaSeleccionadas){
-   let fn = arrayCategoriaNoRepetidas => categoriaSeleccionadas.includes(arrayCategoriaNoRepetidas.category)
+   let fn = arrayCategoriaNoRepetidas => categoriaSeleccionadas.includes(arrayCategoriaNoRepetidas.category) || categoriaSeleccionadas.length == 0
    let filtrados = categoria.filter( fn )
    console.log(categoria)
    console.log(categoriaSeleccionadas)
@@ -66,52 +65,30 @@ function filtrarCategorias(categoria,categoriaSeleccionadas){
 
 categoriasDiv.addEventListener( 'change', (event) => {
     const checked = Array.from( document.querySelectorAll('input[type="checkbox"]:checked') ).map( input => input.value )
-    if( checked.length === 0 ){
     imprimirTarjetas( eventosHome, tarjetas )
-     return
-    }
+
     const categoriasFiltradasBox = filtrarCategorias( categoriasFiltradas, checked )
     categoriasFiltradasBox.length !== 0? imprimirTarjetas( categoriasFiltradasBox, tarjetas ): tarjetas.innerHTML = '<h2> Not available </h2>'
     // console.log(categoriasFiltradasBox)
  } )
 
-
  function inputListenerHome(){
     formulario.addEventListener('submit',(e) =>{
         e.preventDefault()
         let eventosFiltrados = filtrarPorTexto(eventosHome,inputBuscar.value)
-        if(eventosFiltrados !== inputBuscar.value  )
+        let filtradoDoble = eventosFiltrados.filter( busqueda => busqueda == inputBuscar.value )
+        if(eventosFiltrados.length !==0)
         {
-            tarjetas.innerHTML = `<p> There are no results for your search: "${inputBuscar.value}"</p>`
+            console.log(filtradoDoble)
+            imprimirTarjetas(filtradoDoble,tarjetas)   
             console.log(eventosFiltrados)
-            console.log(inputBuscar.value)
         }else{
-            imprimirTarjetas(eventosFiltrados, tarjetas)
+            tarjetas.innerHTML = `<p> There are no results for your search: "${inputBuscar.value}"</p>`
         }
      })
     }
 
- function filtrarPorTexto(arrayEventoNombre,name){
+function filtrarPorTexto(arrayEventoNombre,name){
     let arrayFiltrado = arrayEventoNombre.filter(nombre => nombre.name.toLowerCase().includes(name.toLowerCase()))
     return arrayFiltrado
-}
-
-
-
-function detallesCard(info){
-    info.forEach(item => {
-        div.className = 'card mb-3" style="width: 600px;'
-        contenedorDetails.innerHTML +=`<div class="row g-0">
-          <div class="col-md-4">
-            <img src="${categorias.image}" class="img-fluid rounded-start d-placeholder-img" style="width: 400px ; height: 180px" alt="...">
-          </div>
-          <div class="col-md-8">
-            <div class="card-body">
-              <h5 class="card-title">${categorias.name}</h5>
-              <p class="card-text">${categorias.description}</p>
-              <p class="card-text"><small class="text-muted">${categorias.price}</small></p>
-            </div>
-          </div>
-        </div>`
-    })
 }

@@ -34,6 +34,8 @@ footer p{
 .carousel-item{
     font-size: 28px;
     padding: 10px;
+    transition-duration: .1s;
+
 }
 
 #exampleFormControlTextarea1{
