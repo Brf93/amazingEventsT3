@@ -37,7 +37,14 @@ footer p{
     transition-duration: .1s;
 
 }
-
+.numeros{
+    font-weight: 600;
+    color:  #D90368
+}
+.fecha{
+    font-size: 13px;
+    font-weight: 600;
+}
 #exampleFormControlTextarea1{
     resize: none;
 }
@@ -65,13 +72,36 @@ tbody td{
     border-width: 1px;
     width: 100%;
 }
+.alinearTarjetas{
+    display: flex;
+    justify-content: center;
+}
+#contenedorDetails{
+    max-width: 800px;
+    display: flex;
+}
+#contenedorDetails img{
+    min-width: 100%;
+    min-height: 100%;
+}
+#tarjetas img{
+    min-width: 100%;
+    min-height: 250px;
+    border-radius: 6px 6px 0px 0px;
+}
 @media screen and (max-width : 768px) {
     .footerMobile{
         display: flex !important;
         justify-content: center !important;
     }
+    #categoriasData{
+        flex-direction: row!important;
+        flex-wrap: wrap!important;
+        gap: .5rem;
+        padding: 20px;
+    }
     #buscadorDesk{
         flex-direction: column!important;
-        flex-wrap: wrap;
+        flex-wrap: wrap!important;
     }
 }
