@@ -2,6 +2,7 @@
 const tarjetas = document.getElementById("tarjetas")
 const categoriasDiv = document.getElementById("categoriasData")
 const inputBuscar = document.getElementById('buscar')
+const checkFiltroDoble = document.getElementById('flexCheckDefault')
 const categorias = data.events
 const eventosHome = data.events
 const fn = ( categoria ) => categoria.category
@@ -35,7 +36,7 @@ function crearEventos(eventos) {
             return div
     }
     
-function imprimirTarjetas(eventos,contenedor){
+function imprimirTarjetas(eventos,contenedor){ //Imprime las cards en el main
     
         contenedor.innerHTML = ''
         let fragment = document.createDocumentFragment()
@@ -44,7 +45,7 @@ function imprimirTarjetas(eventos,contenedor){
     }
 
 
-function crearCheckBoxs(values, contenedor){
+function crearCheckBoxs(values, contenedor){ //Crea e imprime los checkbox en el banner
     let template = ''
     values.forEach( value => template  += `<div> <input class="form-check-input" type="checkbox" value="${value}" id="flexCheckDefault">
     <label class="form-check-label" for="flexCheckDefault">${value}
@@ -53,7 +54,7 @@ function crearCheckBoxs(values, contenedor){
     console.log(values)
 }
 
-function filtrarCategorias(categoria,categoriaSeleccionadas){
+function filtrarCategorias(categoria,categoriaSeleccionadas){ //recibe la o las categorias seleccionadas y devuelve sus nombres
    let fn = arrayCategoriaNoRepetidas => categoriaSeleccionadas.includes(arrayCategoriaNoRepetidas.category) || categoriaSeleccionadas.length == 0
    let filtrados = categoria.filter( fn )
    return filtrados
@@ -63,22 +64,19 @@ function filtrarPorTexto(arrayEventoNombre,name){
     return arrayFiltrado
 }
 
-categoriasDiv.addEventListener( 'change', (e) => {
+categoriasDiv.addEventListener( 'change', (e) => { // Listener de los checkboxs
     const checked = Array.from( document.querySelectorAll('input[type="checkbox"]:checked') ).map( input => input.value )
     const categoriasFiltradasBox = filtrarCategorias( categoriasFiltradas, checked )
     const filtradoDoble = filtrarPorTexto(categoriasFiltradasBox, inputBuscar.value)
     if (filtradoDoble.length !==0){
         imprimirTarjetas(filtradoDoble, tarjetas)
     }else{
-        console.log('Hola')
         tarjetas.innerHTML = `<p> There are no matches in your search, try an other filter"</p>`
     }
  } )
-formulario.addEventListener('submit',(e) =>{
+formulario.addEventListener('submit',(e) =>{ //Listener del formulario, boton buscar
         e.preventDefault()
         const eventosFiltrados = filtrarPorTexto(eventosHome,inputBuscar.value)
-        
-        // const filtradoDoble = filtrarCategorias(eventosFiltrados, categoriasDiv)
         if(eventosFiltrados.length !==0)
         {
             imprimirTarjetas(eventosFiltrados,tarjetas)
@@ -87,4 +85,9 @@ formulario.addEventListener('submit',(e) =>{
         }
      })
 
-
+inputBuscar.addEventListener('input', (e)=>{
+    if(inputBuscar.value == '') {
+        imprimirTarjetas(eventosHome ,tarjetas)
+    }
+}
+)
