@@ -58,34 +58,33 @@ function filtrarCategorias(categoria,categoriaSeleccionadas){
    let filtrados = categoria.filter( fn )
    return filtrados
 }
-
-categoriasDiv.addEventListener( 'change', (event) => {
-    const checked = Array.from( document.querySelectorAll('input[type="checkbox"]:checked') ).map( input => input.value )
-    const categoriasFiltradasBox = filtrarCategorias( categoriasFiltradas, checked )
-    
-    categoriasFiltradasBox.length !== 0? imprimirTarjetas( categoriasFiltradasBox, tarjetas ): tarjetas.innerHTML = '<h2> Not available </h2>'
-    
-    // const filtradoDoble = filtrarPorTexto(categoriasFiltradasBox,)
-    
-    // filtrarPorTexto(arrayEventoNombre,name)
-    // imprimirTarjetas( eventosHome, tarjetas )
-    // console.log(categoriasFiltradasBox)
- } )
-formulario.addEventListener('submit',(e) =>{
-        e.preventDefault()
-        let eventosFiltrados = filtrarPorTexto(eventosHome,inputBuscar.value)
-        if(eventosFiltrados.length !==0)
-        {
-            // console.log(filtradoDoble)
-            imprimirTarjetas(eventosFiltrados,tarjetas)   
-            console.log(eventosFiltrados)
-        }else{
-            tarjetas.innerHTML = `<p> There are no results for your search: "${inputBuscar.value}"</p>`
-        }
-     })
-
-
 function filtrarPorTexto(arrayEventoNombre,name){
     let arrayFiltrado = arrayEventoNombre.filter(nombre => nombre.name.toLowerCase().includes(name.toLowerCase()))
     return arrayFiltrado
 }
+
+categoriasDiv.addEventListener( 'change', (e) => {
+    const checked = Array.from( document.querySelectorAll('input[type="checkbox"]:checked') ).map( input => input.value )
+    const categoriasFiltradasBox = filtrarCategorias( categoriasFiltradas, checked )
+    const filtradoDoble = filtrarPorTexto(categoriasFiltradasBox, inputBuscar.value)
+    if (filtradoDoble.length !==0){
+        imprimirTarjetas(filtradoDoble, tarjetas)
+    }else{
+        console.log('Hola')
+        tarjetas.innerHTML = `<p> There are no matches in your search, try an other filter"</p>`
+    }
+ } )
+formulario.addEventListener('submit',(e) =>{
+        e.preventDefault()
+        const eventosFiltrados = filtrarPorTexto(eventosHome,inputBuscar.value)
+        
+        // const filtradoDoble = filtrarCategorias(eventosFiltrados, categoriasDiv)
+        if(eventosFiltrados.length !==0)
+        {
+            imprimirTarjetas(eventosFiltrados,tarjetas)
+        }else{
+            tarjetas.innerHTML = `<p> There are no matches in your search: "${inputBuscar.value}"</p>`
+        }
+     })
+
+
