@@ -16,6 +16,7 @@ for (let eventos of data.events){
     }
 }
 imprimirTarjetas( eventoFechasPast ,tarjetas )
+crearCheckBoxs( arrayCategoriaNoRepetidas, categoriasDiv )
 
     function crearEventos(eventos) {
         let div = document.createElement('div')
@@ -46,14 +47,15 @@ imprimirTarjetas( eventoFechasPast ,tarjetas )
         contenedor.appendChild(fragment)
     }
 
-    crearCheckBoxs( arrayCategoriaNoRepetidas, categoriasDiv )
+   
 
     function crearCheckBoxs(values, contenedor){
         let template = ''
-        values.forEach( value => template  += `<input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+        values.forEach( value => template  += `<div> <input class="form-check-input" type="checkbox" value="${value}" id="flexCheckDefault">
         <label class="form-check-label" for="flexCheckDefault">${value}
-        </label>`)
+        </label></div>`)
         contenedor.innerHTML = template
+        console.log(values)
     }
     
     function filtrarCategorias(categoria,categoriaSeleccionadas){

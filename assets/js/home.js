@@ -12,7 +12,7 @@ const arrayCategoriaNoRepetidas = Array.from( categoriaNoRepetidas )
 const formulario = document.getElementById('form')
 
 imprimirTarjetas( eventosHome ,tarjetas )
-inputListenerHome()
+crearCheckBoxs( arrayCategoriaNoRepetidas, categoriasDiv )
 
 function crearEventos(eventos) {
         let div = document.createElement('div')
@@ -43,13 +43,12 @@ function imprimirTarjetas(eventos,contenedor){
         contenedor.appendChild(fragment)
     }
 
-crearCheckBoxs( arrayCategoriaNoRepetidas, categoriasDiv )
 
 function crearCheckBoxs(values, contenedor){
     let template = ''
     values.forEach( value => template  += `<div> <input class="form-check-input" type="checkbox" value="${value}" id="flexCheckDefault">
     <label class="form-check-label" for="flexCheckDefault">${value}
-    </label>`)
+    </label></div>`)
     contenedor.innerHTML = template
     console.log(values)
 }
@@ -57,36 +56,34 @@ function crearCheckBoxs(values, contenedor){
 function filtrarCategorias(categoria,categoriaSeleccionadas){
    let fn = arrayCategoriaNoRepetidas => categoriaSeleccionadas.includes(arrayCategoriaNoRepetidas.category) || categoriaSeleccionadas.length == 0
    let filtrados = categoria.filter( fn )
-   console.log(categoria)
-   console.log(categoriaSeleccionadas)
-   console.log(filtrados)
    return filtrados
 }
 
 categoriasDiv.addEventListener( 'change', (event) => {
     const checked = Array.from( document.querySelectorAll('input[type="checkbox"]:checked') ).map( input => input.value )
-    imprimirTarjetas( eventosHome, tarjetas )
-
     const categoriasFiltradasBox = filtrarCategorias( categoriasFiltradas, checked )
+    
     categoriasFiltradasBox.length !== 0? imprimirTarjetas( categoriasFiltradasBox, tarjetas ): tarjetas.innerHTML = '<h2> Not available </h2>'
+    
+    // const filtradoDoble = filtrarPorTexto(categoriasFiltradasBox,)
+    
+    // filtrarPorTexto(arrayEventoNombre,name)
+    // imprimirTarjetas( eventosHome, tarjetas )
     // console.log(categoriasFiltradasBox)
  } )
-
- function inputListenerHome(){
-    formulario.addEventListener('submit',(e) =>{
+formulario.addEventListener('submit',(e) =>{
         e.preventDefault()
         let eventosFiltrados = filtrarPorTexto(eventosHome,inputBuscar.value)
-        let filtradoDoble = eventosFiltrados.filter( busqueda => busqueda == inputBuscar.value )
         if(eventosFiltrados.length !==0)
         {
             // console.log(filtradoDoble)
-            // imprimirTarjetas(eventosFiltrados,tarjetas)   
-            // console.log(eventosFiltrados)
+            imprimirTarjetas(eventosFiltrados,tarjetas)   
+            console.log(eventosFiltrados)
         }else{
             tarjetas.innerHTML = `<p> There are no results for your search: "${inputBuscar.value}"</p>`
         }
      })
-    }
+
 
 function filtrarPorTexto(arrayEventoNombre,name){
     let arrayFiltrado = arrayEventoNombre.filter(nombre => nombre.name.toLowerCase().includes(name.toLowerCase()))

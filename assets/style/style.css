@@ -1,3 +1,10 @@
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 300;
+}
 #activo{
     background-color: #d9036776 !important;
 }
@@ -89,16 +96,22 @@ tbody td{
     min-height: 250px;
     border-radius: 6px 6px 0px 0px;
 }
+input[type="checkbox"]:checked{
+    background-color: #d90367!important;
+}
+label{
+    padding-right: 10px;
+}
 @media screen and (max-width : 768px) {
     .footerMobile{
         display: flex !important;
         justify-content: center !important;
     }
     #categoriasData{
-        flex-direction: row!important;
-        flex-wrap: wrap!important;
+        flex-direction: column!important;
         gap: .5rem;
         padding: 20px;
+
     }
     #buscadorDesk{
         flex-direction: column!important;
