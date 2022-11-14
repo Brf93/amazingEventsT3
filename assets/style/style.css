@@ -46,7 +46,7 @@ footer p{
 }
 .numeros{
     font-weight: 600;
-    color:  #D90368
+    color:  #D90368!important;
 }
 .fecha{
     font-size: 13px;

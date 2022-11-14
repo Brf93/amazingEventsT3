@@ -16,7 +16,7 @@ console.log(buscarId)
               <h5 class="card-title">${buscarId.name}</h5>
               <div><span>${buscarId.category} ~ </span><span class = "fecha">${buscarId.date}</span></div>
               
-              <div><span>Place: ${buscarId.place}</span> <span>| Capacity: <span class = "numeros">${buscarId.capacity}</span></span></div>
+              <div><span>Place: ${buscarId.place}</span> <span>| Capacity: <span class="numeros">${buscarId.capacity}</span></span></div>
               <div></div>
               <span></span>
               <p class="card-text">${buscarId.description}</p>

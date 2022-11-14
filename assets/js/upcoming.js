@@ -30,7 +30,8 @@ function crearEventos(eventos) {
                     <h4>${eventos.name}</h4>
                     <p class="card-text">${eventos.description}</p>
                     <div class="d-flex justify-content-between align-items-center">
-                        <small class="text-muted">Price: $${eventos.price}</small>
+                        <small class="text-muted">Price: $<span class="numeros"><span class="numeros">${eventos.price}</span></span></small>
+                        <small class="text-muted">${eventos.date}</small>
                         <div class="btn-group">
                         <a href="../pages/details.html?id=${eventos._id}"><button type="button" class="btn btn-sm btn-outline-secondary text-white">View more</button></a>
                         </div>
@@ -69,7 +70,7 @@ function filtrarCategorias(categoria,categoriaSeleccionadas){ //recibe la o las 
  }
  
 
-categoriasDiv.addEventListener( 'change', (e) => { // Listener de los checkboxs
+ categoriasDiv.addEventListener( 'change', (e) => { // Listener de los checkboxs
     const checked = Array.from( document.querySelectorAll('input[type="checkbox"]:checked') ).map( input => input.value )
     const categoriasFiltradasBox = filtrarCategorias( categoriasFiltradas, checked )
     const filtradoDoble = filtrarPorTexto(categoriasFiltradasBox, inputBuscar.value)
@@ -78,21 +79,26 @@ categoriasDiv.addEventListener( 'change', (e) => { // Listener de los checkboxs
     }else{
         tarjetas.innerHTML = `<p> There are no matches in your search, try an other filter"</p>`
     }
-    } )
+ } )
 formulario.addEventListener('submit',(e) =>{ //Listener del formulario, boton buscar
         e.preventDefault()
-        const eventosFiltrados = filtrarPorTexto(filtradosUpcoming,inputBuscar.value)
-        if(eventosFiltrados.length !==0)
+        const checked = Array.from( document.querySelectorAll('input[type="checkbox"]:checked') ).map( input => input.value )
+        const categoriasFiltradasBox = filtrarCategorias(filtradosUpcoming, checked )
+        const filtradoDoble = filtrarPorTexto(categoriasFiltradasBox, inputBuscar.value)
+    if(filtradoDoble.length !==0)
         {
-            imprimirTarjetas(eventosFiltrados,tarjetas)
+            imprimirTarjetas(filtradoDoble,tarjetas)
         }else{
             tarjetas.innerHTML = `<p> There are no matches in your search: "${inputBuscar.value}"</p>`
-        }
-        })
+            console.log((filtradoDoble))
+            }
+     })
 
 inputBuscar.addEventListener('input', (e)=>{
     if(inputBuscar.value == '') {
-        imprimirTarjetas(filtradosUpcoming ,tarjetas)
+        const checked = Array.from( document.querySelectorAll('input[type="checkbox"]:checked') ).map( input => input.value )
+        const categoriasFiltradasBox = filtrarCategorias( categoriasFiltradas, checked )
+        imprimirTarjetas(categoriasFiltradasBox ,tarjetas)
     }
 }
 )

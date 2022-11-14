@@ -30,7 +30,8 @@ function crearEventos(eventos) {
                     <h4>${eventos.name}</h4>
                     <p class="card-text">${eventos.description}</p>
                     <div class="d-flex justify-content-between align-items-center">
-                        <small class="text-muted">Price: $${eventos.price}</small>
+                        <small class="text-muted">Price: $<span class="numeros">${eventos.price}</span></small>
+                        <small class="text-muted">${eventos.date}</small>
                         <div class="btn-group">
                         <a href="../pages/details.html?id=${eventos._id}"><button type="button" class="btn btn-sm btn-outline-secondary text-white">View more</button></a>
                         </div>
@@ -39,7 +40,6 @@ function crearEventos(eventos) {
             </div>`
         return div
 }
-
 function imprimirTarjetas(eventos,contenedor){
 
     contenedor.innerHTML = ''
@@ -62,35 +62,39 @@ function filtrarCategorias(categoria,categoriaSeleccionadas){ //recibe la o las 
     let filtrados = categoria.filter( fn )
     return filtrados
     }
-    function filtrarPorTexto(arrayEventoNombre,name){
-        let arrayFiltrado = arrayEventoNombre.filter(nombre => nombre.name.toLowerCase().includes(name.toLowerCase()))
-        return arrayFiltrado
+function filtrarPorTexto(arrayEventoNombre,name){
+    let arrayFiltrado = arrayEventoNombre.filter(nombre => nombre.name.toLowerCase().includes(name.toLowerCase()))
+    return arrayFiltrado
+}
+
+categoriasDiv.addEventListener( 'change', (e) => { // Listener de los checkboxs
+    const checked = Array.from( document.querySelectorAll('input[type="checkbox"]:checked') ).map( input => input.value )
+    const categoriasFiltradasBox = filtrarCategorias( categoriasFiltradas, checked )
+    const filtradoDoble = filtrarPorTexto(categoriasFiltradasBox, inputBuscar.value)
+    if (filtradoDoble.length !==0){
+        imprimirTarjetas(filtradoDoble, tarjetas)
+    }else{
+        tarjetas.innerHTML = `<p> There are no matches in your search, try an other filter"</p>`
     }
-    
-    categoriasDiv.addEventListener( 'change', (e) => { // Listener de los checkboxs
-        const checked = Array.from( document.querySelectorAll('input[type="checkbox"]:checked') ).map( input => input.value )
-        const categoriasFiltradasBox = filtrarCategorias( categoriasFiltradas, checked )
-        const filtradoDoble = filtrarPorTexto(categoriasFiltradasBox, inputBuscar.value)
-        if (filtradoDoble.length !==0){
-            imprimirTarjetas(filtradoDoble, tarjetas)
-        }else{
-            tarjetas.innerHTML = `<p> There are no matches in your search, try an other filter"</p>`
-        }
     } )
-    formulario.addEventListener('submit',(e) =>{ //Listener del formulario, boton buscar
-            e.preventDefault()
-            const eventosFiltrados = filtrarPorTexto(eventoFechasPast,inputBuscar.value)
-            if(eventosFiltrados.length !==0)
-            {
-                imprimirTarjetas(eventosFiltrados,tarjetas)
-            }else{
-                tarjetas.innerHTML = `<p> There are no matches in your search: "${inputBuscar.value}"</p>`
+formulario.addEventListener('submit',(e) =>{ //Listener del formulario, boton buscar
+        e.preventDefault()
+        const checked = Array.from( document.querySelectorAll('input[type="checkbox"]:checked') ).map( input => input.value )
+        const categoriasFiltradasBox = filtrarCategorias(eventoFechasPast, checked )
+        const filtradoDoble = filtrarPorTexto(categoriasFiltradasBox, inputBuscar.value)
+    if(filtradoDoble.length !==0)
+        {
+            imprimirTarjetas(filtradoDoble,tarjetas)
+        }else{
+            tarjetas.innerHTML = `<p> There are no matches in your search: "${inputBuscar.value}"</p>`
             }
         })
 
 inputBuscar.addEventListener('input', (e)=>{
     if(inputBuscar.value == '') {
-        imprimirTarjetas(eventoFechasPast ,tarjetas)
+        const checked = Array.from( document.querySelectorAll('input[type="checkbox"]:checked') ).map( input => input.value )
+        const categoriasFiltradasBox = filtrarCategorias( categoriasFiltradas, checked )
+        imprimirTarjetas(categoriasFiltradasBox ,tarjetas)
     }
 }
 )
