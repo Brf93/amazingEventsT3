@@ -38,13 +38,11 @@ function crearEventos(eventos) {
     }
     
 function imprimirTarjetas(eventos,contenedor){ //Imprime las cards en el main
-    
         contenedor.innerHTML = ''
         let fragment = document.createDocumentFragment()
         eventos.forEach( evento => fragment.appendChild(crearEventos(evento)))
         contenedor.appendChild(fragment)
     }
-
 
 function crearCheckBoxs(values, contenedor){ //Crea e imprime los checkbox en el banner
     let template = ''
