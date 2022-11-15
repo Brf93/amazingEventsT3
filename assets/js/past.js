@@ -1,23 +1,33 @@
 const tarjetas = document.getElementById("tarjetas")
 const categoriasDiv = document.getElementById("categoriasData")
 const inputBuscar = document.getElementById('buscar')
-const categorias = data.events
-const eventoFechasPast = []
-const fn = ( categoria ) => categoria.category
-const categoriasFiltradas = categorias.filter( fn )
-const categoriasBoxs = categoriasFiltradas.map( fn )
-const categoriaNoRepetidas = new Set( categoriasBoxs )
-const arrayCategoriaNoRepetidas = Array.from( categoriaNoRepetidas )
+let filtradosPast;
+let categorias;
+let categoriasFiltradas;
+let categoriasBoxs;
+let categoriaNoRepetidas;
+let arrayCategoriaNoRepetidas;
 const formulario = document.getElementById('form')
+let url = "https://amazing-events.herokuapp.com/api/events"
 
-for (let eventos of data.events){
-    if (eventos.date < data.currentDate)
-    {
-        eventoFechasPast.push(eventos)
-    }
+traerDatos(url)
+
+function traerDatos (url){
+    fetch (url)
+        .then(response => response.json())
+            .then(data => {
+                filtradosPast =  data.events.filter((element) => (element.date < data.currentDate))
+                categorias = filtradosPast
+                const fn = ( categoria ) => categoria.category
+                categoriasFiltradas = categorias.filter(fn)
+                categoriasBoxs = categoriasFiltradas.map(fn)
+                categoriaNoRepetidas = new Set(categoriasBoxs)
+                arrayCategoriaNoRepetidas = Array.from(categoriaNoRepetidas)
+                imprimirTarjetas(filtradosPast,tarjetas)
+                crearCheckBoxs(arrayCategoriaNoRepetidas,categoriasDiv)
+            })      
+            .catch(error => console.error(error.message))
 }
-imprimirTarjetas( eventoFechasPast ,tarjetas )
-crearCheckBoxs( arrayCategoriaNoRepetidas, categoriasDiv )
 
 function crearEventos(eventos) {
     let div = document.createElement('div')
@@ -80,7 +90,7 @@ categoriasDiv.addEventListener( 'change', (e) => { // Listener de los checkboxs
 formulario.addEventListener('submit',(e) =>{ //Listener del formulario, boton buscar
         e.preventDefault()
         const checked = Array.from( document.querySelectorAll('input[type="checkbox"]:checked') ).map( input => input.value )
-        const categoriasFiltradasBox = filtrarCategorias(eventoFechasPast, checked )
+        const categoriasFiltradasBox = filtrarCategorias(filtradosPast, checked )
         const filtradoDoble = filtrarPorTexto(categoriasFiltradasBox, inputBuscar.value)
     if(filtradoDoble.length !==0)
         {

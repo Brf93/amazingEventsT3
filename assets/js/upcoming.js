@@ -23,7 +23,7 @@ function traerDatos (url){
     fetch (url)
         .then(response => response.json())
             .then(data => {
-                filtradosUpcoming =  data.events.filter((element) => (element.date < data.currentDate))
+                filtradosUpcoming =  data.events.filter((element) => (element.date > data.currentDate))
                 categorias = filtradosUpcoming
                 const fn = ( categoria ) => categoria.category
                 categoriasFiltradas = categorias.filter(fn)
