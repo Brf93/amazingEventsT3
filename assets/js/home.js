@@ -3,17 +3,36 @@ const tarjetas = document.getElementById("tarjetas")
 const categoriasDiv = document.getElementById("categoriasData")
 const inputBuscar = document.getElementById('buscar')
 const checkFiltroDoble = document.getElementById('flexCheckDefault')
-const categorias = data.events
-const eventosHome = data.events
-const fn = ( categoria ) => categoria.category
-const categoriasFiltradas = categorias.filter( fn )
-const categoriasBoxs = categoriasFiltradas.map( fn )
-const categoriaNoRepetidas = new Set( categoriasBoxs )
-const arrayCategoriaNoRepetidas = Array.from( categoriaNoRepetidas )
+let eventosHome;
+let categorias;
+let categoriasFiltradas;
+let categoriasBoxs;
+let categoriaNoRepetidas;
+let arrayCategoriaNoRepetidas;
 const formulario = document.getElementById('form')
+let url = "https://amazing-events.herokuapp.com/api/events"
 
-imprimirTarjetas( eventosHome ,tarjetas )
-crearCheckBoxs( arrayCategoriaNoRepetidas, categoriasDiv )
+traerDatos(url)
+
+function traerDatos (url){
+    fetch (url)
+        .then(response => response.json())
+            .then(data => {
+                eventosHome = data.events
+                categorias = eventosHome
+                const fn = ( categoria ) => categoria.category
+                categoriasFiltradas = categorias.filter(fn)
+                categoriasBoxs = categoriasFiltradas.map(fn)
+                categoriaNoRepetidas = new Set(categoriasBoxs)
+                arrayCategoriaNoRepetidas = Array.from(categoriaNoRepetidas)
+                imprimirTarjetas(eventosHome,tarjetas)
+                crearCheckBoxs(arrayCategoriaNoRepetidas,categoriasDiv)
+
+                console.log(eventosHome)
+            })      
+            .catch(error => console.error(error.message))
+}
+
 
 function crearEventos(eventos) {
         let div = document.createElement('div')
@@ -72,7 +91,9 @@ categoriasDiv.addEventListener( 'change', (e) => { // Listener de los checkboxs
     }else{
         tarjetas.innerHTML = `<p> There are no matches in your search, try an other filter"</p>`
     }
- } )
+    } )
+
+
 formulario.addEventListener('submit',(e) =>{ //Listener del formulario, boton buscar
         e.preventDefault()
         const checked = Array.from( document.querySelectorAll('input[type="checkbox"]:checked') ).map( input => input.value )
