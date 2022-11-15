@@ -27,8 +27,6 @@ function traerDatos (url){
                 arrayCategoriaNoRepetidas = Array.from(categoriaNoRepetidas)
                 imprimirTarjetas(eventosHome,tarjetas)
                 crearCheckBoxs(arrayCategoriaNoRepetidas,categoriasDiv)
-
-                console.log(eventosHome)
             })      
             .catch(error => console.error(error.message))
 }
