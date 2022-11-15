@@ -3,13 +3,13 @@ const tarjetas = document.getElementById("tarjetas")
 const categoriasDiv = document.getElementById("categoriasData")
 const inputBuscar = document.getElementById('buscar')
 const checkFiltroDoble = document.getElementById('flexCheckDefault')
+const formulario = document.getElementById('form')
 let eventosHome;
 let categorias;
 let categoriasFiltradas;
 let categoriasBoxs;
 let categoriaNoRepetidas;
 let arrayCategoriaNoRepetidas;
-const formulario = document.getElementById('form')
 let url = "https://amazing-events.herokuapp.com/api/events"
 
 traerDatos(url)

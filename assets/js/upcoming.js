@@ -1,24 +1,16 @@
 const tarjetas = document.getElementById("tarjetas")
 const categoriasDiv = document.getElementById("categoriasData")
 const inputBuscar = document.getElementById('buscar')
-// const categorias = data.events
+const formulario = document.getElementById('form')
 let filtradosUpcoming;
-// const fn = ( categoria ) => categoria.category
-// const categoriasFiltradas = categorias.filter( fn )
-// const categoriasBoxs = categoriasFiltradas.map( fn )
-// const categoriaNoRepetidas = new Set( categoriasBoxs )
-// const arrayCategoriaNoRepetidas = Array.from( categoriaNoRepetidas )
-// const formulario = document.getElementById('form')
 let categorias;
 let categoriasFiltradas;
 let categoriasBoxs;
 let categoriaNoRepetidas;
 let arrayCategoriaNoRepetidas;
-const formulario = document.getElementById('form')
 let url = "https://amazing-events.herokuapp.com/api/events"
 
 traerDatos(url)
-
 function traerDatos (url){
     fetch (url)
         .then(response => response.json())
