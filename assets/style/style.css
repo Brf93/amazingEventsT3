@@ -56,6 +56,9 @@ footer p{
     font-weight: 600;
     color:  #D90368!important;
 }
+.descripcion{
+    font-weight: 400;
+}
 .fecha{
     font-size: 13px;
     font-weight: 600;
@@ -104,11 +107,26 @@ tbody td{
     min-height: 250px;
     border-radius: 6px 6px 0px 0px;
 }
+.dolar{
+    font-weight: bold;
+}
 input[type="checkbox"]:checked{
     background-color: #d90367!important;
 }
 label{
     padding-right: 10px;
+}
+ul{
+    list-style-type:disc;
+    padding-left: 20px;
+    padding-top: 10px;
+}
+li span {
+    font-weight: 400;
+}
+.minuscula{
+    text-transform: lowercase;
+    font-weight: 400;
 }
 @media screen and (max-width : 768px) {
     .footerMobile{

@@ -20,7 +20,7 @@ function traerDatos (url){
 
 function crearDetalles(buscarId) {
         let contenedorDetails = document.getElementById("contenedorDetails")
-        if(buscarId.assistance !==0){
+        if(buscarId.assistance !== undefined){
           contenedorDetails.className = 'card mb-3'
           contenedorDetails.innerHTML =`<div class="row g-0 ">
           <div class="col-md-4 ">
@@ -28,13 +28,15 @@ function crearDetalles(buscarId) {
           </div>
           <div class="col-md-8">
             <div class="card-body">
-              <h5 class="card-title">${buscarId.name}</h5>
+              <h2 class="card-title">${buscarId.name}</h2>
               <div><span>${buscarId.category} ~ </span><span class = "fecha">${buscarId.date}</span></div>
-              <div><span>Place: ${buscarId.place}</span> <span>| Capacity: <span class="numeros">${buscarId.capacity}</span></span></div>
-              <div></div>
-              <span></span>
-              <p class="card-text">${buscarId.description}</p>
-              <p class="card-text"><small class="text-muted">Price: $<span class = "numeros">${buscarId.price}</span></small></p>
+              <ul>
+                <li><span>Place: <span class="numeros">${buscarId.place}</span></span></li>
+                <li><span>Capacity: <span class="numeros">${buscarId.capacity}</span></span></li>
+                <li><span>Assistance: <span class="numeros">${buscarId.assistance}</span></span></li>
+              </ul>
+              <p class="card-text descripcion">${buscarId.description}</p>
+              <p class="card-text"><small class="text-muted">Price: <span class = "dolar">$</span><span class = "numeros">${buscarId.price}</span></small></p>
             </div>
           </div>
         </div>`
@@ -46,14 +48,15 @@ function crearDetalles(buscarId) {
           </div>
           <div class="col-md-8">
             <div class="card-body">
-              <h5 class="card-title">${buscarId.name}</h5>
+              <h2 class="card-title">${buscarId.name}</h2>
               <div><span>${buscarId.category} ~ </span><span class = "fecha">${buscarId.date}</span></div>
-              
-              <div><span>Place: ${buscarId.place}</span> <span>| Capacity: <span class="numeros">${buscarId.capacity}</span></span></div>
-              <div></div>
-              <span></span>
+              <ul>
+                <li><span>Place: <span class="numeros">${buscarId.place}</span></span></li>
+                <li><span>Capacity: <span class="numeros">${buscarId.capacity}</span></span></li>
+                <li><span>Estimate: <span class="numeros">${buscarId.estimate}</span></span></li>
+              </ul>
               <p class="card-text">${buscarId.description}</p>
-              <p class="card-text"><small class="text-muted">Price: $<span class = "numeros">${buscarId.price}</span></small></p>
+              <p class="card-text"><small class="text-muted">Price: <span class = "dolar">$</span><span class = "numeros">${buscarId.price}</span></small></p>
             </div>
           </div>
         </div>`
