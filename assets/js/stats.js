@@ -118,7 +118,6 @@ function listarTabla(array, presion){
         presion.appendChild(lista)
     })
 }
-
 function revenues(array, valor){
     categoria = array.filter(eventos => eventos.category === valor)
     ganancias = categoria.map(categoria => categoria.price * categoria.estimate? categoria.price * categoria.estimate : categoria.price * categoria.assistance)
