@@ -31,7 +31,7 @@ function traerDatos (url){
                 listarTabla(pasados, tableLast)
                 
             })      
-            // .catch(error => console.error(error.message))
+            .catch(error => console.error(error.message))
 }
 function calcularMayorAudiencia(array){
     let asistencia = []
@@ -68,8 +68,6 @@ function calcularMenorAudiencia(array){
     for (let i = 0; i < 3 ; i++){
         let nombreEventoAsist = eventos.find(elemento => ((elemento.assistance? elemento.assistance : elemento.estimate) == mayoresTres[i]))
         let Porcentaje = (((nombreEventoAsist.assistance? nombreEventoAsist.assistance : nombreEventoAsist.estimate) * 100) / ( TodoSumado )).toFixed(3)
-        console.log(mayoresTres)
-        console.log(TodoSumado)
         
         if (i == 0){
             menorTercero.innerHTML += `<span>${nombreEventoAsist.name.toUpperCase()}</span>: ${nombreEventoAsist.assistance?" had an attendance" :"estimated attendance of "} ${Porcentaje} %`
