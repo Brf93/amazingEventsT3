@@ -65,7 +65,7 @@ function crearCheckBoxs(values, contenedor){ //Crea e imprime los checkbox en el
     <label class="form-check-label" for="flexCheckDefault">${value}
     </label></div>`)
     contenedor.innerHTML = template
-    console.log(values)
+    // console.log(values)
 }
 
 

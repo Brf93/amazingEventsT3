@@ -11,8 +11,8 @@ const capacidadTercero = document.getElementById('capacidadTercero')
 const MENORAUD = document.getElementById('menorAudiencia')
 const CAPALARGO = document.getElementById('capacidadLarga')
 let categoriaFiltrada = []
-const TABLEUP = document.getElementById('tableupcoming')
-const TABLELAST = document.getElementById('tablepasado')
+const tableUP = document.getElementById('tableUpcoming')
+const tableLast = document.getElementById('tablepasado')
 
 
 
@@ -29,8 +29,8 @@ function traerDatos (url){
                 mayorCapacidad(eventos)
                 calcularMenorAudiencia(eventos)
                 calcularMayorAudiencia(eventos)
-                // listarTabla(futuro, TABLEUP) //listaUpcoming
-                // listarTabla(pasados, TABLELAST)
+                listarTabla(futuro, tableUP) //listaUpcoming
+                listarTabla(pasados, tableLast)
                 
             })      
             // .catch(error => console.error(error.message))
@@ -47,7 +47,7 @@ function calcularMayorAudiencia(array){
 
     for (let i = 0; i < 3 ; i++){
         let nombreEventoAsist = eventos.find(elemento => ((elemento.assistance? elemento.assistance : elemento.estimate) == mayoresTres[i]))
-        let Porcentaje = ((nombreEventoAsist.assistance? nombreEventoAsist.assistance : nombreEventoAsist.estimate) / TodoSumado * 100).toFixed(2)
+        let Porcentaje = (((nombreEventoAsist.assistance? nombreEventoAsist.assistance : nombreEventoAsist.estimate) * 100) / (TodoSumado)).toFixed(2)
 
         if (i == 0){
             mayorPrimero.innerHTML += `<span>${nombreEventoAsist.name.toUpperCase()}</span>: had an asistance of ${Porcentaje} %`
@@ -71,8 +71,9 @@ function calcularMenorAudiencia(array){
     
     for (let i = 0; i < 3 ; i++){
         let nombreEventoAsist = eventos.find(elemento => ((elemento.assistance? elemento.assistance : elemento.estimate) == mayoresTres[i]))
-        let Porcentaje = ((nombreEventoAsist.assistance? nombreEventoAsist.assistance : nombreEventoAsist.estimate) / TodoSumado * 100).toFixed(2)
-        console.log(mayoresTres[i])
+        let Porcentaje = (((nombreEventoAsist.assistance? nombreEventoAsist.assistance : nombreEventoAsist.estimate) * 100) / ( TodoSumado )).toFixed(3)
+        console.log(mayoresTres)
+        console.log(TodoSumado)
         if (i == 0){
             menorTercero.innerHTML += `<span>${nombreEventoAsist.name.toUpperCase()}</span>: had an asistance of ${Porcentaje} %`
         }else if(i == 1){
@@ -107,12 +108,13 @@ function mayorCapacidad(array){
 function listarTabla(array, presion){
     catego = []
     array.forEach(item => !catego.includes(item.category)? catego.push(item.category) : "")
-    catego.forEach(eventos=>{
+    let categoOrdenada = catego.sort()
+    console.log(categoOrdenada)
+    categoOrdenada.forEach(eventos=>{
         let lista = document.createElement('tr')
-        lista.className = 'hoveriano'
-        lista.innerHTML = `<th class="text-danger">${eventos}</th>
-        <th class="text-center">${revenues(array, eventos)}</th>
-        <th class="text-center">${attendanceFuturo(array, eventos)}%</th>`
+        lista.innerHTML = `<td>${eventos}</td>
+        <td class="text-start">$ ${revenues(array, eventos).toFixed()}</td>
+        <td class="text-start">${attendanceFuturo(array, eventos)}%</td>`
         presion.appendChild(lista)
     })
 }
