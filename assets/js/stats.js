@@ -13,8 +13,8 @@ const CAPALARGO = document.getElementById('capacidadLarga')
 let categoriaFiltrada = []
 const tableUP = document.getElementById('tableUpcoming')
 const tableLast = document.getElementById('tablepasado')
-
-
+const options2 = { style: 'currency', currency: 'USD' };
+const numberFormat2 = new Intl.NumberFormat('en-US', options2);
 
 traerDatos(url)
 
@@ -29,7 +29,7 @@ function traerDatos (url){
                 mayorCapacidad(eventos)
                 calcularMenorAudiencia(eventos)
                 calcularMayorAudiencia(eventos)
-                listarTabla(futuro, tableUP) //listaUpcoming
+                // listarTabla(futuro, tableUP) //listaUpcoming
                 listarTabla(pasados, tableLast)
                 
             })      
@@ -83,7 +83,6 @@ function calcularMenorAudiencia(array){
         }
     }
 }
-
 function mayorCapacidad(array){
     let capacidad = []
     array.map(evento => capacidad.push(parseFloat(evento.capacity)))
@@ -102,19 +101,16 @@ function mayorCapacidad(array){
             capacidadTercero.innerHTML += `<span>${nombreEventoAsist.name.toUpperCase()}</span>: with a capacity of ${nombreEventoAsist.capacity} people`
         }
     }
-
 } 
-
 function listarTabla(array, presion){
     catego = []
     array.forEach(item => !catego.includes(item.category)? catego.push(item.category) : "")
     let categoOrdenada = catego.sort()
-    console.log(categoOrdenada)
     categoOrdenada.forEach(eventos=>{
         let lista = document.createElement('tr')
         lista.innerHTML = `<td>${eventos}</td>
-        <td class="text-start">$ ${revenues(array, eventos).toFixed()}</td>
-        <td class="text-start">${attendanceFuturo(array, eventos)}%</td>`
+        <td class="text-start">${revenues(array, eventos)}</td>
+        <td class="text-start">${attendancePorcentaje(array, eventos)}%</td>`
         presion.appendChild(lista)
     })
 }
@@ -124,13 +120,13 @@ function revenues(array, valor){
     totalGanancias = ganancias.reduce(function (previousValue, currentValue){
         return previousValue + currentValue;
     })
-    return totalGanancias
+    return numberFormat2.format(totalGanancias)
 }
-
-function attendanceFuturo(array, valor){
+function attendancePorcentaje(array, valor){
     asistencia = array.filter(eventos => eventos.category === valor)
     asistencia2 = asistencia.map(eventos => parseFloat(eventos.estimate? eventos.estimate : eventos.assistance))
     let Ultimatum = Math.max(...asistencia2)
+    console.log(asistencia)
     const TodoSumado = asistencia2.reduce(function (previousValue, currentValue) {
         return previousValue + currentValue;
     })
