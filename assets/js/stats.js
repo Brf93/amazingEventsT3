@@ -8,8 +8,6 @@ const menorTercero = document.getElementById('menorTercero')
 const capacidadPrimero = document.getElementById('capacidadPrimero')
 const capacidadSegundo = document.getElementById('capacidadSegundo')
 const capacidadTercero = document.getElementById('capacidadTercero')
-const MENORAUD = document.getElementById('menorAudiencia')
-const CAPALARGO = document.getElementById('capacidadLarga')
 let categoriaFiltrada = []
 const tableUP = document.getElementById('tableUpcoming')
 const tableLast = document.getElementById('tablepasado')
@@ -29,13 +27,12 @@ function traerDatos (url){
                 mayorCapacidad(eventos)
                 calcularMenorAudiencia(eventos)
                 calcularMayorAudiencia(eventos)
-                // listarTabla(futuro, tableUP) //listaUpcoming
+                listarTabla(futuro, tableUP) //listaUpcoming
                 listarTabla(pasados, tableLast)
                 
             })      
             // .catch(error => console.error(error.message))
 }
-
 function calcularMayorAudiencia(array){
     let asistencia = []
     array.map(evento => asistencia.push(parseFloat(evento.assistance? evento.assistance : evento.estimate)))
@@ -48,17 +45,16 @@ function calcularMayorAudiencia(array){
     for (let i = 0; i < 3 ; i++){
         let nombreEventoAsist = eventos.find(elemento => ((elemento.assistance? elemento.assistance : elemento.estimate) == mayoresTres[i]))
         let Porcentaje = (((nombreEventoAsist.assistance? nombreEventoAsist.assistance : nombreEventoAsist.estimate) * 100) / (TodoSumado)).toFixed(2)
-
+        
         if (i == 0){
-            mayorPrimero.innerHTML += `<span>${nombreEventoAsist.name.toUpperCase()}</span>: had an asistance of ${Porcentaje} %`
+            mayorPrimero.innerHTML = `<span>${nombreEventoAsist.name.toUpperCase()}</span>: ${nombreEventoAsist.assistance?" had an attendance" :"estimated attendance"} ${Porcentaje} %`
         }else if(i == 1){
-            mayorSegundo.innerHTML += `<span>${nombreEventoAsist.name.toUpperCase()}</span>: had an asistance of ${Porcentaje} %`
+            mayorSegundo.innerHTML += `<span>${nombreEventoAsist.name.toUpperCase()}</span>: ${nombreEventoAsist.assistance?" had an attendance" :"estimated attendance"} ${Porcentaje} %`
         }else{
-            mayorTercero.innerHTML += `<span>${nombreEventoAsist.name.toUpperCase()}</span>: had an asistance of ${Porcentaje} %`
+            mayorTercero.innerHTML += `<span>${nombreEventoAsist.name.toUpperCase()}</span>: ${nombreEventoAsist.assistance?" had an attendance" :"estimated attendance"} ${Porcentaje} %`
         }
     }
 }
-
 function calcularMenorAudiencia(array){
     let asistencia = []
     array.map(evento => asistencia.push(parseFloat(evento.assistance? evento.assistance : evento.estimate)))
@@ -74,12 +70,13 @@ function calcularMenorAudiencia(array){
         let Porcentaje = (((nombreEventoAsist.assistance? nombreEventoAsist.assistance : nombreEventoAsist.estimate) * 100) / ( TodoSumado )).toFixed(3)
         console.log(mayoresTres)
         console.log(TodoSumado)
+        
         if (i == 0){
-            menorTercero.innerHTML += `<span>${nombreEventoAsist.name.toUpperCase()}</span>: had an asistance of ${Porcentaje} %`
+            menorTercero.innerHTML += `<span>${nombreEventoAsist.name.toUpperCase()}</span>: ${nombreEventoAsist.assistance?" had an attendance" :"estimated attendance of "} ${Porcentaje} %`
         }else if(i == 1){
-            menorSegundo.innerHTML += `<span>${nombreEventoAsist.name.toUpperCase()}</span>: had an asistance of ${Porcentaje} %`
+            menorSegundo.innerHTML += `<span>${nombreEventoAsist.name.toUpperCase()}</span>: ${nombreEventoAsist.assistance?" had an attendance" :"estimated attendance of "} ${Porcentaje} %`
         }else{
-            menorPrimero.innerHTML += `<span>${nombreEventoAsist.name.toUpperCase()}</span>: had an asistance of ${Porcentaje} %`
+            menorPrimero.innerHTML += `<span>${nombreEventoAsist.name.toUpperCase()}</span>: ${nombreEventoAsist.assistance?" had an attendance" :"estimated attendance of "} ${Porcentaje} %`
         }
     }
 }
@@ -87,12 +84,9 @@ function mayorCapacidad(array){
     let capacidad = []
     array.map(evento => capacidad.push(parseFloat(evento.capacity)))
     let mayoresTres = capacidad.sort(function(num1,num2){return num2 - num1;}).slice(0,3)
-    // let Ultimatum = Math.max(...capacidad)
 
     for (let i = 0; i < 3 ; i++){
         let nombreEventoAsist = eventos.find(elemento => ((elemento.capacity) == mayoresTres[i]))
-        // let Porcentaje = ((nombreEventoAsist.capacity) / TodoSumado * 100).toFixed(2)
-        
         if (i == 0){
             capacidadPrimero.innerHTML += `<span>${nombreEventoAsist.name.toUpperCase()}</span>: with a capacity of ${nombreEventoAsist.capacity} people`
         }else if(i == 1){
@@ -102,7 +96,7 @@ function mayorCapacidad(array){
         }
     }
 } 
-function listarTabla(array, presion){
+function listarTabla(array, ubicacion){
     catego = []
     array.forEach(item => !catego.includes(item.category)? catego.push(item.category) : "")
     let categoOrdenada = catego.sort()
@@ -111,7 +105,7 @@ function listarTabla(array, presion){
         lista.innerHTML = `<td>${eventos}</td>
         <td class="text-start">${revenues(array, eventos)}</td>
         <td class="text-start">${attendancePorcentaje(array, eventos)}%</td>`
-        presion.appendChild(lista)
+        ubicacion.appendChild(lista)
     })
 }
 function revenues(array, valor){
@@ -126,7 +120,6 @@ function attendancePorcentaje(array, valor){
     asistencia = array.filter(eventos => eventos.category === valor)
     asistencia2 = asistencia.map(eventos => parseFloat(eventos.estimate? eventos.estimate : eventos.assistance))
     let Ultimatum = Math.max(...asistencia2)
-    console.log(asistencia)
     const TodoSumado = asistencia2.reduce(function (previousValue, currentValue) {
         return previousValue + currentValue;
     })
